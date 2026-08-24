@@ -228,10 +228,22 @@
         .group:hover .books-img {
             transform: scale(1.05) rotate(2deg) translateY(-4px);
         }
+
+        /* Camera Flash Animation */
+        @keyframes flash-effect {
+            0% { opacity: 0; }
+            10% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+        .animate-flash {
+            animation: flash-effect 0.8s cubic-bezier(0.15, 0.85, 0.35, 1) forwards;
+        }
     </style>
 </head>
 
 <body class="bg-background text-on-background overflow-x-hidden min-h-screen relative font-body-md">
+    <!-- Camera Flash Overlay -->
+    <div id="camera-flash" class="fixed inset-0 pointer-events-none z-[100]" style="opacity: 0; background-color: #fff;"></div>
 
     <div class="relative w-full min-h-screen">
 
@@ -482,122 +494,111 @@
                 });
             }
 
+            function playCameraShutterSound() {
+                if (isMuted) return;
+                initAudio();
+                if (audioCtx && audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+                
+                const now = audioCtx.currentTime;
+                
+                // Shutter click 1 (high pitch mechanical slap)
+                const osc1 = audioCtx.createOscillator();
+                osc1.type = 'triangle';
+                osc1.frequency.setValueAtTime(1200, now);
+                osc1.frequency.exponentialRampToValueAtTime(100, now + 0.04);
+                
+                const gain1 = audioCtx.createGain();
+                gain1.gain.setValueAtTime(0.2, now);
+                gain1.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+                
+                osc1.connect(gain1);
+                gain1.connect(audioCtx.destination);
+                osc1.start(now);
+                osc1.stop(now + 0.05);
+                
+                // Shutter click 2 (recoil thud, 0.05s later)
+                const osc2 = audioCtx.createOscillator();
+                osc2.type = 'sine';
+                osc2.frequency.setValueAtTime(200, now + 0.05);
+                osc2.frequency.exponentialRampToValueAtTime(30, now + 0.12);
+                
+                const gain2 = audioCtx.createGain();
+                gain2.gain.setValueAtTime(0.25, now + 0.05);
+                gain2.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
+                
+                osc2.connect(gain2);
+                gain2.connect(audioCtx.destination);
+                osc2.start(now + 0.05);
+                osc2.stop(now + 0.13);
+            }
+
             function triggerColorTransition(e, instant = false) {
                 if (hasTransitioned) return;
                 hasTransitioned = true;
-
+        
                 // Persist colorized state in localStorage
                 localStorage.setItem('colorized', 'true');
-
-                // Reset clipPath to circular format
-                colorWrapper.style.clipPath = 'circle(var(--ripple-radius) at var(--click-x) var(--click-y))';
-
+        
                 if (instant) {
-                    // Instantly transition (no animation/sound)
+                    // Instantly transition (no animation/sound/flash)
                     colorWrapper.classList.remove('pointer-events-none');
                     colorWrapper.style.clipPath = 'none';
                     return;
                 }
-
-                // Get coordinate of click
-                let x, y;
-                if (e && e.pageX !== undefined) {
-                    x = e.pageX;
-                    y = e.pageY;
-                } else {
-                    // Default center of the viewport
-                    x = window.innerWidth / 2 + window.scrollX;
-                    y = window.innerHeight / 2 + window.scrollY;
+        
+                // Trigger Camera Shutter Sound
+                playCameraShutterSound();
+        
+                // Trigger Full Screen Flash
+                const flash = document.getElementById('camera-flash');
+                if (flash) {
+                    flash.classList.remove('animate-flash');
+                    void flash.offsetWidth; // trigger reflow
+                    flash.classList.add('animate-flash');
+                    
+                    // Cleanup class after animation ends
+                    setTimeout(() => {
+                        flash.classList.remove('animate-flash');
+                    }, 800);
                 }
-
-                // Set CSS variables for transition starting point
-                root.style.setProperty('--click-x', x + 'px');
-                root.style.setProperty('--click-y', y + 'px');
-
-                // Play synth audio effect
-                playTransitionAudio();
-
-                // Animate circular ripple radius
-                let start = null;
-                const duration = 1200; // 1.2 seconds
-                const startRad = 0;
-
-                // Calculate diagonal distance to fully cover the screen
-                const docHeight = document.documentElement.scrollHeight;
-                const docWidth = document.documentElement.scrollWidth;
-                const endRad = Math.sqrt(docHeight * docHeight + docWidth * docWidth);
-
-                // Enable pointer events on color wrapper during animation
-                colorWrapper.classList.remove('pointer-events-none');
-
-                function step(timestamp) {
-                    if (!start) start = timestamp;
-                    const progress = Math.min((timestamp - start) / duration, 1);
-                    // Cubic ease out
-                    const ease = 1 - Math.pow(1 - progress, 3);
-                    const currentRad = startRad + (endRad - startRad) * ease;
-
-                    root.style.setProperty('--ripple-radius', currentRad + 'px');
-
-                    if (progress < 1) {
-                        window.requestAnimationFrame(step);
-                    } else {
-                        colorWrapper.style.clipPath = 'none';
-                    }
-                }
-                window.requestAnimationFrame(step);
+        
+                // At peak of flash (80ms), instantly swap to Color
+                setTimeout(() => {
+                    colorWrapper.classList.remove('pointer-events-none');
+                    colorWrapper.style.clipPath = 'none';
+                }, 80);
             }
-
+        
             function drainColorTransition(e) {
                 if (!hasTransitioned) return;
                 hasTransitioned = false;
-
+        
                 // Persist colorized state in localStorage
                 localStorage.setItem('colorized', 'false');
-
-                // Get coordinate of click
-                let x, y;
-                if (e && e.pageX !== undefined) {
-                    x = e.pageX;
-                    y = e.pageY;
-                } else {
-                    x = window.innerWidth / 2 + window.scrollX;
-                    y = window.innerHeight / 2 + window.scrollY;
+        
+                // Trigger Camera Shutter Sound
+                playCameraShutterSound();
+        
+                // Trigger Full Screen Flash
+                const flash = document.getElementById('camera-flash');
+                if (flash) {
+                    flash.classList.remove('animate-flash');
+                    void flash.offsetWidth; // trigger reflow
+                    flash.classList.add('animate-flash');
+                    
+                    // Cleanup class after animation ends
+                    setTimeout(() => {
+                        flash.classList.remove('animate-flash');
+                    }, 800);
                 }
-
-                root.style.setProperty('--click-x', x + 'px');
-                root.style.setProperty('--click-y', y + 'px');
-
-                // Play audio transition sweep
-                playTransitionAudio();
-
-                // Animate circular ripple radius from max size to 0
-                let start = null;
-                const duration = 1200;
-                const docHeight = document.documentElement.scrollHeight;
-                const docWidth = document.documentElement.scrollWidth;
-                const startRad = Math.sqrt(docHeight * docHeight + docWidth * docWidth);
-                const endRad = 0;
-
-                function step(timestamp) {
-                    if (!start) start = timestamp;
-                    const progress = Math.min((timestamp - start) / duration, 1);
-                    const ease = 1 - Math.pow(1 - progress, 3);
-                    const currentRad = startRad - (startRad - endRad) * ease;
-
-                    // Set clip path explicitly during collapse
-                    colorWrapper.style.clipPath = `circle(${currentRad}px at var(--click-x) var(--click-y))`;
-
-                    if (progress < 1) {
-                        window.requestAnimationFrame(step);
-                    } else {
-                        // Done! Lock interaction and set size to 0
-                        colorWrapper.classList.add('pointer-events-none');
-                        root.style.setProperty('--ripple-radius', '0px');
-                        colorWrapper.style.clipPath = `circle(0px at var(--click-x) var(--click-y))`;
-                    }
-                }
-                window.requestAnimationFrame(step);
+        
+                // At peak of flash (80ms), instantly swap back to B&W
+                setTimeout(() => {
+                    colorWrapper.classList.add('pointer-events-none');
+                    colorWrapper.style.clipPath = 'circle(0px)';
+                }, 80);
             }
 
             // === Event Delegation for Dynamic Elements ===
