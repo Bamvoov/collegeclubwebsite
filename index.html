@@ -610,6 +610,36 @@
                     return;
                 }
 
+                const menuToggle = e.target.closest('.mobile-menu-toggle');
+                if (menuToggle) {
+                    e.stopPropagation();
+                    const firstMenu = document.querySelector('.mobile-menu');
+                    if (firstMenu) {
+                        const willOpen = firstMenu.classList.contains('hidden');
+                        
+                        document.querySelectorAll('nav').forEach(nav => {
+                            const menu = nav.querySelector('.mobile-menu');
+                            if (menu) {
+                                if (willOpen) {
+                                    menu.classList.remove('hidden');
+                                    menu.classList.add('flex');
+                                } else {
+                                    menu.classList.add('hidden');
+                                    menu.classList.remove('flex');
+                                }
+                            }
+                        });
+                        
+                        document.querySelectorAll('.mobile-menu-toggle').forEach(btn => {
+                            const icon = btn.querySelector('.material-symbols-outlined');
+                            if (icon) {
+                                icon.textContent = willOpen ? 'close' : 'menu';
+                            }
+                        });
+                    }
+                    return;
+                }
+
                 const injectBtn = e.target.closest('#rebel-btn-bw');
                 if (injectBtn) {
                     triggerColorTransition(e);
@@ -626,10 +656,11 @@
             // === Load Component HTML Files Dynamically ===
             async function loadComponents() {
                 try {
+                    const cacheBuster = new Date().getTime();
                     const [headerHTML, bodyHTML, footerHTML] = await Promise.all([
-                        fetch('components/header.html').then(r => r.text()),
-                        fetch('components/body.html').then(r => r.text()),
-                        fetch('components/footer.html').then(r => r.text())
+                        fetch('components/header.html?v=' + cacheBuster).then(r => r.text()),
+                        fetch('components/body.html?v=' + cacheBuster).then(r => r.text()),
+                        fetch('components/footer.html?v=' + cacheBuster).then(r => r.text())
                     ]);
 
                     // Inject into Black & White wrapper

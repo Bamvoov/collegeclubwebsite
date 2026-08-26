@@ -1,22 +1,41 @@
 <nav
-    class="bg-background dark:bg-background w-full sticky top-0 z-50 border-b-4 border-on-background bg-surface-container-highest shadow-[0_4px_0_0_#1d1d00]">
-    <div class="flex justify-between items-center px-gutter py-4 max-w-full">
-        <a class="font-headline-xl text-headline-lg bg-primary-container text-on-primary-container -rotate-2 px-4 py-2 border-2 border-on-background shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:bg-secondary hover:text-on-secondary transition-all duration-100 hover:skew-x-3"
+    class="bg-background dark:bg-background w-full sticky top-0 z-50 border-b-4 border-on-background bg-surface-container-highest shadow-[0_4px_0_0_#1d1d00] flex flex-col">
+    <div class="flex justify-between items-center px-4 md:px-gutter py-4 w-full max-w-full relative">
+        <a class="font-headline-xl text-2xl md:text-3xl lg:text-headline-lg bg-primary-container text-on-primary-container -rotate-2 px-4 py-2 border-2 border-on-background shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] md:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:bg-secondary hover:text-on-secondary transition-all duration-100 hover:skew-x-3 shrink-0"
             href="#">JOURNALISM CLUB</a>
         <div class="hidden md:flex gap-6 items-center">
             <a class="font-headline-lg text-headline-lg-mobile uppercase tracking-tighter text-on-surface hover:text-primary-container transition-transform hover:-rotate-3 hover:bg-secondary hover:text-on-secondary transition-all duration-100 px-2 py-1"
                 href="#">MANIFESTO</a>
             <a class="font-headline-lg text-headline-lg-mobile uppercase tracking-tighter text-on-surface hover:text-primary-container transition-transform hover:-rotate-3 hover:bg-secondary hover:text-on-secondary transition-all duration-100 px-2 py-1"
-                href="#">NEWS<br>LETTER</a>
+                href="#">NEWS<br class="hidden md:block">LETTER</a>
             <a class="font-headline-lg text-headline-lg-mobile uppercase tracking-tighter text-on-surface hover:text-primary-container transition-transform hover:-rotate-3 hover:bg-secondary hover:text-on-secondary transition-all duration-100 px-2 py-1"
                 href="#">TEAM</a>
         </div>
-        <div class="flex gap-4 items-center">
-
+        <div class="flex gap-2 sm:gap-4 items-center">
             <button
-                class="font-headline-lg text-headline-lg-mobile uppercase tracking-tighter text-primary dark:text-primary-fixed bg-surface-container-lowest border-2 border-primary-container px-4 py-2 hover:bg-secondary hover:text-on-secondary transition-all duration-100 -rotate-1 hover:rotate-2 shadow-[4px_4px_0px_0px_#e9ea00]">
+                class="hidden md:block font-headline-lg md:text-base lg:text-headline-lg-mobile uppercase tracking-tighter text-primary dark:text-primary-fixed bg-surface-container-lowest border-2 border-primary-container px-4 py-2 hover:bg-secondary hover:text-on-secondary transition-all duration-100 -rotate-1 hover:rotate-2 shadow-[4px_4px_0px_0px_#e9ea00]">
                 JOIN US
             </button>
+            <button
+                class="mobile-menu-toggle flex md:hidden items-center justify-center text-on-background focus:outline-none p-2 border-2 border-on-background bg-[#e9ea00] hover:bg-[#fe00fe] hover:text-white transition-all duration-100 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[1.5px_1.5px_0px_0px_rgba(0,0,0,1)] rotate-2">
+                <span class="material-symbols-outlined text-xl sm:text-2xl block font-bold">menu</span>
+            </button>
+        </div>
+        
+        <!-- Mobile Dropdown Menu (Absolute Overlay) -->
+        <div class="mobile-menu hidden absolute top-full left-0 w-full border-b-4 border-on-background bg-background flex-col z-50 shadow-[0_8px_0_0_rgba(0,0,0,1)] md:hidden">
+            <div class="flex flex-col p-4 gap-3 bg-surface-container-highest border-t-4 border-on-background">
+                <a class="font-headline-lg text-2xl uppercase tracking-tighter text-on-surface hover:bg-secondary hover:text-on-secondary px-4 py-3 border-b-2 border-dashed border-outline-variant transition-all block -rotate-1"
+                    href="#">MANIFESTO</a>
+                <a class="font-headline-lg text-2xl uppercase tracking-tighter text-on-surface hover:bg-secondary hover:text-on-secondary px-4 py-3 border-b-2 border-dashed border-outline-variant transition-all block rotate-1"
+                    href="#">NEWSLETTER</a>
+                <a class="font-headline-lg text-2xl uppercase tracking-tighter text-on-surface hover:bg-secondary hover:text-on-secondary px-4 py-3 transition-all block -rotate-1"
+                    href="#">TEAM</a>
+                <button
+                    class="w-full mt-2 font-headline-lg text-xl uppercase tracking-tighter text-primary dark:text-primary-fixed bg-[#fe00fe] border-4 border-on-background py-4 hover:bg-[#e9ea00] hover:text-black transition-all duration-100 shadow-[6px_6px_0px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[3px_3px_0px_0px_#000] rotate-1">
+                    JOIN US
+                </button>
+            </div>
         </div>
     </div>
 </nav>
