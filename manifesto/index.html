@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Journalism Club VITB</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&amp;family=Space+Grotesk:wght@400;500;700;800&amp;family=JetBrains+Mono:wght@500;800&amp;display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-fixed-dim": "#cccd00",
+                        "secondary": "#ffabf3",
+                        "on-primary-fixed": "#1d1d00",
+                        "surface": "#141408",
+                        "on-tertiary-container": "#8247b9",
+                        "primary": "#ffffff",
+                        "tertiary-fixed-dim": "#ddb7ff",
+                        "on-surface": "#e6e3ce",
+                        "surface-container-low": "#1c1c0f",
+                        "surface-variant": "#363527",
+                        "background": "#141408",
+                        "on-tertiary-fixed-variant": "#622599",
+                        "tertiary": "#ffffff",
+                        "secondary-container": "#fe00fe",
+                        "surface-container": "#202013",
+                        "on-primary-container": "#676800",
+                        "surface-container-highest": "#363527",
+                        "surface-container-lowest": "#0f0f04",
+                        "on-primary": "#323200",
+                        "error-container": "#93000a",
+                        "on-secondary-fixed": "#380038",
+                        "primary-container": "#e9ea00",
+                        "on-background": "#e6e3ce",
+                        "inverse-on-surface": "#313123",
+                        "secondary-fixed": "#ffd7f5",
+                        "on-tertiary": "#4a0080",
+                        "outline-variant": "#484831",
+                        "on-secondary-fixed-variant": "#810081",
+                        "tertiary-fixed": "#f0dbff",
+                        "secondary-fixed-dim": "#ffabf3",
+                        "surface-bright": "#3a3a2b",
+                        "on-error-container": "#ffdad6",
+                        "surface-dim": "#141408",
+                        "tertiary-container": "#f0dbff",
+                        "outline": "#939277",
+                        "inverse-surface": "#e6e3ce",
+                        "on-secondary": "#5b005b",
+                        "on-secondary-container": "#500050",
+                        "inverse-primary": "#616200",
+                        "primary-fixed": "#e9ea00",
+                        "on-error": "#690005",
+                        "surface-tint": "#cccd00",
+                        "error": "#ffb4ab",
+                        "on-tertiary-fixed": "#2c0050",
+                        "on-primary-fixed-variant": "#494900",
+                        "on-surface-variant": "#cac8aa",
+                        "surface-container-high": "#2b2b1d"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "1.5rem",
+                        "margin-page": "2rem",
+                        "stack-xl": "4rem",
+                        "stack-md": "1.5rem",
+                        "stack-xs": "0.5rem"
+                    },
+                    "fontFamily": {
+                        "label-mono": ["JetBrains Mono"],
+                        "headline-lg-mobile": ["Bricolage Grotesque"],
+                        "headline-lg": ["Bricolage Grotesque"],
+                        "body-md": ["Space Grotesk"],
+                        "subheading": ["Bricolage Grotesque"],
+                        "body-lg": ["Space Grotesk"],
+                        "caption": ["Space Grotesk"],
+                        "headline-xl": ["Bricolage Grotesque"]
+                    },
+                    "fontSize": {
+                        "label-mono": ["14px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "headline-lg-mobile": ["36px", { "lineHeight": "32px", "fontWeight": "800" }],
+                        "headline-lg": ["48px", { "lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "subheading": ["24px", { "lineHeight": "28px", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "26px", "fontWeight": "400" }],
+                        "caption": ["12px", { "lineHeight": "14px", "fontWeight": "500" }],
+                        "headline-xl": ["80px", { "lineHeight": "72px", "letterSpacing": "-0.05em", "fontWeight": "800" }]
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        :root {
+            --ripple-radius: 0px;
+            --click-x: 50%;
+            --click-y: 50%;
+        }
+
+        .texture-overlay-bw {
+            background-image: radial-gradient(circle, #e9ea00 1.5px, transparent 1.5px), radial-gradient(circle, #fe00fe 1.5px, transparent 1.5px);
+            background-size: 8px 8px;
+            background-position: 0 0, 4px 4px;
+            opacity: 0.15;
+            pointer-events: none;
+        }
+
+        .texture-overlay-color {
+            background-image: radial-gradient(circle, #000 1px, transparent 1px);
+            background-size: 4px 4px;
+            opacity: 0.15;
+            pointer-events: none;
+        }
+
+        .torn-edge {
+            clip-path: polygon(0% 0%, 100% 2%, 98% 100%, 2% 98%);
+        }
+
+        .torn-edge-alt {
+            clip-path: polygon(2% 2%, 98% 0%, 100% 98%, 0% 100%);
+        }
+
+        @keyframes slap {
+            0% {
+                transform: scale(1.5) rotate(15deg);
+                opacity: 0;
+            }
+
+            50% {
+                transform: scale(0.9) rotate(-5deg);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(1) rotate(0deg);
+                opacity: 1;
+            }
+        }
+
+        .animate-slap {
+            animation: slap 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0) rotate(-2deg);
+            }
+
+            50% {
+                transform: translateY(-10px) rotate(2deg);
+            }
+        }
+
+        .animate-float {
+            animation: float 4s ease-in-out infinite;
+        }
+
+        /* Black and White base state wrapper */
+        #bw-wrapper {
+            filter: grayscale(100%) contrast(120%) brightness(95%);
+        }
+
+        /* Colored layer with expanding circular clip-path */
+        #color-wrapper {
+            clip-path: circle(var(--ripple-radius) at var(--click-x) var(--click-y));
+        }
+
+        /* Interactive woodblock/ransom note lettering */
+        .hover-letter {
+            display: inline-block;
+            transition: transform 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275), font-weight 0.15s ease, color 0.15s ease;
+        }
+
+        .hover-letter:hover {
+            transform: scale(1.3) rotate(8deg) translateY(-8px);
+            font-weight: 900;
+        }
+
+        #color-wrapper .hover-letter:hover {
+            color: #e9ea00;
+            text-shadow: #fe00fe 3px 3px 0px;
+        }
+
+        #bw-wrapper .hover-letter:hover {
+            color: #ffffff;
+            text-shadow: #000000 3px 3px 0px;
+        }
+
+        /* Dynamic Image Hover Transitions */
+        #bw-wrapper img, #color-wrapper img {
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.4s ease;
+        }
+        
+        /* Hero Image Hover */
+        #bw-wrapper img.animate-slap:hover,
+        #color-wrapper img.animate-slap:hover {
+            transform: scale(1.03) rotate(-2deg) translateY(-6px) !important;
+        }
+        
+        /* Card 1 (Interview & Events) Image Hover on Card Hover */
+        .group:hover .mic-img {
+            transform: scale(1.05) rotate(2deg) translateY(-4px);
+        }
+        
+        /* Card 2 (Photojournalism Camera) Image Hover on Card Hover */
+        .group:hover .camera-img {
+            transform: scale(1.08) rotate(-3deg) translateY(-6px);
+        }
+        
+        /* Card 3 (What We Do) Image Hover on Card Hover */
+        .group:hover .books-img {
+            transform: scale(1.05) rotate(2deg) translateY(-4px);
+        }
+
+        /* Camera Flash Animation */
+        @keyframes flash-effect {
+            0% { opacity: 0; }
+            10% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+        .animate-flash {
+            animation: flash-effect 0.8s cubic-bezier(0.15, 0.85, 0.35, 1) forwards;
+        }
+    </style>
+</head>
+
+<body class="bg-background text-on-background overflow-x-hidden min-h-screen relative font-body-md">
+    <!-- Camera Flash Overlay -->
+    <div id="camera-flash" class="fixed inset-0 pointer-events-none z-[100]" style="opacity: 0; background-color: #fff;"></div>
+
+    <div class="relative w-full min-h-screen">
+
+        <!-- ============================================ -->
+        <!-- 1. BLACK AND WHITE VERSION LAYER             -->
+        <!-- ============================================ -->
+        <div id="bw-wrapper" class="w-full min-h-screen relative">
+            <div class="fixed inset-0 w-full h-full texture-overlay-bw z-50"></div>
+            <div id="bw-nav-container"></div>
+            <div id="bw-body-container"></div>
+            <div id="bw-footer-container"></div>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- 2. COLORED VERSION LAYER                     -->
+        <!-- ============================================ -->
+        <div id="color-wrapper" class="absolute inset-0 w-full min-h-screen pointer-events-none z-20">
+            <div class="pointer-events-auto w-full h-full relative">
+                <div class="fixed inset-0 w-full h-full -z-10 opacity-40 mix-blend-screen" style="display:block;">
+                    <canvas id="shader-canvas-ANIMATION_7" style="display:block;width:100%;height:100%"></canvas>
+                </div>
+
+                <div class="absolute inset-0 w-full h-full texture-overlay-color z-50"></div>
+                <div id="color-nav-container"></div>
+                <div id="color-body-container"></div>
+                <div id="color-footer-container"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- 3. JAVASCRIPT LOGIC (SLIDER & AUDIO)        -->
+    <!-- ============================================ -->
+    <script>
+            (function () {
+                // === WebGL Canvas Shader Background ===
+                const canvas = document.getElementById('shader-canvas-ANIMATION_7');
+
+                function syncSize() {
+                    const w = window.innerWidth;
+                    const h = window.innerHeight;
+                    if (canvas.width !== w || canvas.height !== h) {
+                        canvas.width = w;
+                        canvas.height = h;
+                    }
+                }
+
+                window.addEventListener('resize', syncSize);
+                syncSize();
+
+                const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+                if (!gl) return;
+
+                const vs = `attribute vec2 a_position;
+    varying vec2 v_texCoord;
+    void main() {
+      v_texCoord = a_position * 0.5 + 0.5;
+      gl_Position = vec4(a_position, 0.0, 1.0);
+    }`;
+
+                const fs = `precision highp float;
+    uniform float u_time;
+    uniform vec2 u_resolution;
+    
+    float random(vec2 st) {
+        return fract(sin(dot(st.xy, vec2(12.9898,78.233))) * 43758.5453123);
+    }
+    
+    void main() {
+        vec2 uv = gl_FragCoord.xy / u_resolution.xy;
+        
+        // Base colors from the design system
+        vec3 background = vec3(0.08, 0.08, 0.03); // Deep dark purple/black
+        vec3 yellow = vec3(0.99, 1.0, 0.0);      // Neon yellow
+        vec3 magenta = vec3(1.0, 0.0, 1.0);      // Magenta
+        
+        // Grain/Noise texture
+        float n = random(uv + u_time * 0.01);
+        
+        // Halftone effect
+        vec2 grid = fract(gl_FragCoord.xy / 10.0) - 0.5;
+        float dist = length(grid);
+        float halftone = smoothstep(0.4, 0.45, dist);
+        
+        // Moving blobs of color (ink bleeds)
+        float blob1 = smoothstep(0.4, 0.6, length(uv - vec2(0.3, 0.7) + 0.1 * sin(u_time * 0.5)));
+        float blob2 = smoothstep(0.3, 0.5, length(uv - vec2(0.8, 0.2) + 0.1 * cos(u_time * 0.7)));
+        
+        vec3 color = background;
+        color = mix(yellow, color, blob1);
+        color = mix(magenta, color, blob2);
+        
+        // Apply grain and halftone
+        color *= mix(0.9, 1.1, n);
+        color = mix(color, color * 0.8, halftone * 0.5);
+        
+        gl_FragColor = vec4(color, 1.0);
+    }`;
+
+                function cs(type, src) {
+                    const s = gl.createShader(type);
+                    gl.shaderSource(s, src);
+                    gl.compileShader(s);
+                    return s;
+                }
+
+                const prog = gl.createProgram();
+                gl.attachShader(prog, cs(gl.VERTEX_SHADER, vs));
+                gl.attachShader(prog, cs(gl.FRAGMENT_SHADER, fs));
+                gl.linkProgram(prog);
+                gl.useProgram(prog);
+
+                const buf = gl.createBuffer();
+                gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+                gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
+
+                const pos = gl.getAttribLocation(prog, 'a_position');
+                gl.enableVertexAttribArray(pos);
+                gl.vertexAttribPointer(pos, 2, gl.FLOAT, false, 0, 0);
+
+                const uTime = gl.getUniformLocation(prog, 'u_time');
+                const uRes = gl.getUniformLocation(prog, 'u_resolution');
+
+                function render(t) {
+                    gl.viewport(0, 0, canvas.width, canvas.height);
+                    if (uTime) gl.uniform1f(uTime, t * 0.001);
+                    if (uRes) gl.uniform2f(uRes, canvas.width, canvas.height);
+                    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+                    requestAnimationFrame(render);
+                }
+                render(0);
+            })();
+
+        (function () {
+            const colorWrapper = document.getElementById('color-wrapper');
+            const root = document.documentElement;
+            let hasTransitioned = false;
+
+            // === Audio Synthesizer Module (Web Audio API) ===
+            let audioCtx = null;
+            let humOsc = null;
+            let noiseSource = null;
+            let mainGain = null;
+            let isMuted = true;
+
+            function initAudio() {
+                if (audioCtx) return;
+                try {
+                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+                    // Main volume control
+                    mainGain = audioCtx.createGain();
+                    mainGain.gain.setValueAtTime(0, audioCtx.currentTime);
+                    mainGain.connect(audioCtx.destination);
+
+                    // Low-freq hum for energy charge
+                    humOsc = audioCtx.createOscillator();
+                    humOsc.type = 'sawtooth';
+                    humOsc.frequency.setValueAtTime(55, audioCtx.currentTime);
+
+                    const humFilter = audioCtx.createBiquadFilter();
+                    humFilter.type = 'lowpass';
+                    humFilter.frequency.setValueAtTime(140, audioCtx.currentTime);
+
+                    const humGain = audioCtx.createGain();
+                    humGain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+
+                    humOsc.connect(humFilter);
+                    humFilter.connect(humGain);
+                    humGain.connect(mainGain);
+                    humOsc.start();
+
+                    // High-freq grit for screen spray sound
+                    const bufferSize = audioCtx.sampleRate;
+                    const noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+                    const output = noiseBuffer.getChannelData(0);
+                    for (let i = 0; i < bufferSize; i++) {
+                        output[i] = Math.random() * 2 - 1;
+                    }
+
+                    noiseSource = audioCtx.createBufferSource();
+                    noiseSource.buffer = noiseBuffer;
+                    noiseSource.loop = true;
+
+                    const noiseFilter = audioCtx.createBiquadFilter();
+                    noiseFilter.type = 'bandpass';
+                    noiseFilter.frequency.setValueAtTime(1200, audioCtx.currentTime);
+                    noiseFilter.Q.setValueAtTime(2, audioCtx.currentTime);
+
+                    const noiseGain = audioCtx.createGain();
+                    noiseGain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+
+                    noiseSource.connect(noiseFilter);
+                    noiseFilter.connect(noiseGain);
+                    noiseGain.connect(mainGain);
+                    noiseSource.start();
+                } catch (e) {
+                    console.error("Web Audio failed:", e);
+                }
+            }
+
+            function playTransitionAudio() {
+                if (isMuted) return;
+                initAudio();
+                if (audioCtx && audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+
+                const now = audioCtx.currentTime;
+                // Fade volume in quickly, then fade out slowly
+                mainGain.gain.cancelScheduledValues(now);
+                mainGain.gain.setValueAtTime(0, now);
+                mainGain.gain.linearRampToValueAtTime(0.4, now + 0.1);
+                mainGain.gain.exponentialRampToValueAtTime(0.001, now + 1.2);
+
+                // Pitch sweep
+                if (humOsc) {
+                    humOsc.frequency.cancelScheduledValues(now);
+                    humOsc.frequency.setValueAtTime(55, now);
+                    humOsc.frequency.exponentialRampToValueAtTime(220, now + 0.8);
+                }
+            }
+
+            function toggleMute() {
+                isMuted = !isMuted;
+                if (!isMuted) {
+                    initAudio();
+                    if (audioCtx && audioCtx.state === 'suspended') {
+                        audioCtx.resume();
+                    }
+                }
+                updateSoundButtonsUI();
+            }
+
+            function updateSoundButtonsUI() {
+                document.querySelectorAll('.sound-toggle').forEach(btn => {
+                    const icon = btn.querySelector('.material-symbols-outlined');
+                    const label = btn.querySelector('span:not(.material-symbols-outlined)');
+                    if (icon && label) {
+                        if (isMuted) {
+                            icon.textContent = 'volume_off';
+                            label.textContent = 'SOUND OFF';
+                        } else {
+                            icon.textContent = 'volume_up';
+                            label.textContent = 'SOUND ON';
+                        }
+                    }
+                });
+            }
+
+            function playCameraShutterSound() {
+                if (isMuted) return;
+                initAudio();
+                if (audioCtx && audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+                
+                const now = audioCtx.currentTime;
+                
+                // Shutter click 1 (high pitch mechanical slap)
+                const osc1 = audioCtx.createOscillator();
+                osc1.type = 'triangle';
+                osc1.frequency.setValueAtTime(1200, now);
+                osc1.frequency.exponentialRampToValueAtTime(100, now + 0.04);
+                
+                const gain1 = audioCtx.createGain();
+                gain1.gain.setValueAtTime(0.2, now);
+                gain1.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+                
+                osc1.connect(gain1);
+                gain1.connect(audioCtx.destination);
+                osc1.start(now);
+                osc1.stop(now + 0.05);
+                
+                // Shutter click 2 (recoil thud, 0.05s later)
+                const osc2 = audioCtx.createOscillator();
+                osc2.type = 'sine';
+                osc2.frequency.setValueAtTime(200, now + 0.05);
+                osc2.frequency.exponentialRampToValueAtTime(30, now + 0.12);
+                
+                const gain2 = audioCtx.createGain();
+                gain2.gain.setValueAtTime(0.25, now + 0.05);
+                gain2.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
+                
+                osc2.connect(gain2);
+                gain2.connect(audioCtx.destination);
+                osc2.start(now + 0.05);
+                osc2.stop(now + 0.13);
+            }
+
+            function triggerColorTransition(e, instant = false) {
+                if (hasTransitioned) return;
+                hasTransitioned = true;
+        
+                // Persist colorized state in localStorage
+                localStorage.setItem('colorized', 'true');
+        
+                if (instant) {
+                    // Instantly transition (no animation/sound/flash)
+                    colorWrapper.classList.remove('pointer-events-none');
+                    colorWrapper.style.clipPath = 'none';
+                    return;
+                }
+        
+                // Trigger Camera Shutter Sound
+                playCameraShutterSound();
+        
+                // Trigger Full Screen Flash
+                const flash = document.getElementById('camera-flash');
+                if (flash) {
+                    flash.classList.remove('animate-flash');
+                    void flash.offsetWidth; // trigger reflow
+                    flash.classList.add('animate-flash');
+                    
+                    // Cleanup class after animation ends
+                    setTimeout(() => {
+                        flash.classList.remove('animate-flash');
+                    }, 800);
+                }
+        
+                // At peak of flash (80ms), instantly swap to Color
+                setTimeout(() => {
+                    colorWrapper.classList.remove('pointer-events-none');
+                    colorWrapper.style.clipPath = 'none';
+                }, 80);
+            }
+        
+            function drainColorTransition(e) {
+                if (!hasTransitioned) return;
+                hasTransitioned = false;
+        
+                // Persist colorized state in localStorage
+                localStorage.setItem('colorized', 'false');
+        
+                // Trigger Camera Shutter Sound
+                playCameraShutterSound();
+        
+                // Trigger Full Screen Flash
+                const flash = document.getElementById('camera-flash');
+                if (flash) {
+                    flash.classList.remove('animate-flash');
+                    void flash.offsetWidth; // trigger reflow
+                    flash.classList.add('animate-flash');
+                    
+                    // Cleanup class after animation ends
+                    setTimeout(() => {
+                        flash.classList.remove('animate-flash');
+                    }, 800);
+                }
+        
+                // At peak of flash (80ms), instantly swap back to B&W
+                setTimeout(() => {
+                    colorWrapper.classList.add('pointer-events-none');
+                    colorWrapper.style.clipPath = 'circle(0px)';
+                }, 80);
+            }
+
+            // === Event Delegation for Dynamic Elements ===
+            document.body.addEventListener('click', (e) => {
+                const soundBtn = e.target.closest('.sound-toggle');
+                if (soundBtn) {
+                    e.stopPropagation();
+                    toggleMute();
+                    return;
+                }
+
+                const menuToggle = e.target.closest('.mobile-menu-toggle');
+                if (menuToggle) {
+                    e.stopPropagation();
+                    const firstMenu = document.querySelector('.mobile-menu');
+                    if (firstMenu) {
+                        const willOpen = firstMenu.classList.contains('hidden');
+                        
+                        document.querySelectorAll('nav').forEach(nav => {
+                            const menu = nav.querySelector('.mobile-menu');
+                            if (menu) {
+                                if (willOpen) {
+                                    menu.classList.remove('hidden');
+                                    menu.classList.add('flex');
+                                } else {
+                                    menu.classList.add('hidden');
+                                    menu.classList.remove('flex');
+                                }
+                            }
+                        });
+                        
+                        document.querySelectorAll('.mobile-menu-toggle').forEach(btn => {
+                            const icon = btn.querySelector('.material-symbols-outlined');
+                            if (icon) {
+                                icon.textContent = willOpen ? 'close' : 'menu';
+                            }
+                        });
+                    }
+                    return;
+                }
+
+                const injectBtn = e.target.closest('#rebel-btn-bw');
+                if (injectBtn) {
+                    triggerColorTransition(e);
+                    return;
+                }
+
+                const drainBtn = e.target.closest('#rebel-btn-color');
+                if (drainBtn) {
+                    drainColorTransition(e);
+                    return;
+                }
+            });
+
+            // === Load Component HTML Files Dynamically ===
+            async function loadComponents() {
+                try {
+                    const cacheBuster = new Date().getTime();
+                    const [headerHTML, bodyHTML, footerHTML] = await Promise.all([
+                        fetch('../components/header.html?v=' + cacheBuster).then(r => r.text()),
+                        fetch('../components/manifesto-body.html?v=' + cacheBuster).then(r => r.text()),
+                        fetch('../components/footer.html?v=' + cacheBuster).then(r => r.text())
+                    ]);
+
+                    // Inject into Black & White wrapper
+                    document.getElementById('bw-nav-container').innerHTML = headerHTML;
+                    document.getElementById('bw-body-container').innerHTML = bodyHTML;
+                    document.getElementById('bw-footer-container').innerHTML = footerHTML;
+
+                    // Inject into Color wrapper
+                    document.getElementById('color-nav-container').innerHTML = headerHTML;
+                    document.getElementById('color-body-container').innerHTML = bodyHTML;
+                    document.getElementById('color-footer-container').innerHTML = footerHTML;
+
+                    // Customize the button in the Color wrapper for toggling color off
+                    const colorBtn = document.querySelector('#color-body-container #rebel-btn-bw');
+                    if (colorBtn) {
+                        colorBtn.id = 'rebel-btn-color';
+                        colorBtn.textContent = ' DRAIN COLOR';
+                        colorBtn.className = "font-headline-lg text-2xl uppercase tracking-tighter text-[#000] bg-[#fe00fe] border-4 border-on-background px-8 py-4 hover:bg-[#e9ea00] hover:text-[#000] transition-all duration-100 rotate-2 hover:-rotate-1 shadow-[8px_8px_0px_0px_#000] active:translate-x-1 active:translate-y-1 active:shadow-[3px_3px_0px_0px_#000]";
+                    }
+
+                    // Developer query string hook e.g. http://localhost:8000/?reset=true to clear state
+                    const urlParams = new URLSearchParams(window.location.search);
+                    if (urlParams.get('reset') === 'true') {
+                        localStorage.removeItem('colorized');
+                    }
+
+                    // Check if site is already colorized from a previous session
+                    if (localStorage.getItem('colorized') === 'true') {
+                        triggerColorTransition(null, true);
+                    } else {
+                        // Auto-trigger transition after 4.5 seconds if the user does not click
+                        setTimeout(() => {
+                            if (!hasTransitioned) {
+                                triggerColorTransition();
+                            }
+                        }, 4500);
+                    }
+
+                    // Sync loaded button icons with isMuted state
+                    updateSoundButtonsUI();
+
+                } catch (e) {
+                    console.error("Error loading component HTML files:", e);
+                }
+            }
+
+            // Start loading
+            window.addEventListener('DOMContentLoaded', loadComponents);
+        })();
+    </script>
+</body>
+
+</html>
